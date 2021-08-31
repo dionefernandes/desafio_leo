@@ -1,0 +1,29 @@
+#Habilita a reescrita de url para url's amigáveis
+RewriteEngine On
+
+RewriteCond %{THE_REQUEST} public/([^\s?]*) [NC]
+RewriteRule ^ %1 [L,NE,R=302]
+RewriteRule ^((?!public/).*)$ http://localhost/desafio_leo/public/$1 [L,NC]
+
+#Ao enviar para o servidor, substituir a linha acima pela linha abaixo
+#RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
+ 
+#Desabilita a listagem de arquivos do diretório
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+#Verifica se há uma versão mais atual do arquivo do que a que está em cache.
+Header unset Etag
+
+#FileEtag Mtime size
+FileETag None
+Header unset Last-Modified
+
+#Caso ocorra um erro ou a página não for encontrada, redireciona para uma página personalizada
+#Obs.: Ao enviar para o servidor, remover "http://localhost/desafio_leo/" de todas as linhas a seguir
+ErrorDocument 400 http://localhost/desafio_leo/404.php
+ErrorDocument 401 http://localhost/desafio_leo/404.php
+ErrorDocument 403 http://localhost/desafio_leo/404.php
+ErrorDocument 404 http://localhost/desafio_leo/404.php
+ErrorDocument 500 http://localhost/desafio_leo/404.php
