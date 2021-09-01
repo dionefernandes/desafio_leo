@@ -14,7 +14,7 @@
 	ini_set("post_max_size","20M");
 	
 	// Definições padrões do site
-	define('BASE', '../');
+	define('BASE', '..\\');
 	define('SITE_NAME', "Desafio LEO");
 	define('SITE_FULL_NAME', "Desafio LEO Learning Brasil");
 	define('DEFAULT_EMAIL', "contato@leolearning.com");
@@ -52,10 +52,12 @@
 	//ini_set('display_errors', 0 );
 	
 	
-	//Carrega as classes do sistema nas camadas 'model' e 'controller'
+	//Carrega as classes do sistema das camadas 'model' e 'controller' de forma dinâmica
 	spl_autoload_register(function ($class) {
 		if(file_exists(BASE . $class . '.php')) {
 			include_once(BASE . $class . '.php');
 		}
 	});
+
+	require_once("../app/functions/functions.php")
 ?>
