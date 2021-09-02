@@ -1,9 +1,10 @@
 <?php
+    use app\core;
     use app\controllers\UserController;
     
     require_once("..\app\config\config.php");
-
-    echo SITE_FULL_NAME . "<br>";
+    
+    new \app\core\RouterCore();
 
     $user = new UserController();
 ?>

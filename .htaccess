@@ -1,13 +1,25 @@
-#Habilita a reescrita de url para url's amigáveis
-RewriteEngine On
+#Habilita a reescrita de url para url's amigáveis e direciona para pasta public
 
-RewriteCond %{THE_REQUEST} public/([^\s?]*) [NC]
-RewriteRule ^ %1 [L,NE,R=302]
-RewriteRule ^((?!public/).*)$ http://localhost/desafio_leo/public/$1 [L,NC]
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /desafio_leo/public/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)\?*$ index.php?_route_=$1 [L,QSA]
+    RewriteCond %{THE_REQUEST} public/([^\s?]*) [NC]
+    RewriteRule ^ %1 [L,NE,R=302]
+    RewriteRule ^((?!public/).*)$ http://localhost/desafio_leo/public/$1 [L,NC]
+</IfModule>
+
+
 
 #Ao enviar para o servidor, substituir a linha acima pela linha abaixo
 #RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
- 
+
+#Rediona a URL para HTTPS. Descomentar quando enviar par ao servidor
+#RewriteCond %{HTTPS} !=On
+#RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+
 #Desabilita a listagem de arquivos do diretório
 <IfModule mod_autoindex.c>
     Options -Indexes
@@ -22,8 +34,8 @@ Header unset Last-Modified
 
 #Caso ocorra um erro ou a página não for encontrada, redireciona para uma página personalizada
 #Obs.: Ao enviar para o servidor, remover "http://localhost/desafio_leo/" de todas as linhas a seguir
-ErrorDocument 400 http://localhost/desafio_leo/404.php
-ErrorDocument 401 http://localhost/desafio_leo/404.php
-ErrorDocument 403 http://localhost/desafio_leo/404.php
-ErrorDocument 404 http://localhost/desafio_leo/404.php
-ErrorDocument 500 http://localhost/desafio_leo/404.php
+#ErrorDocument 400 http://localhost/desafio_leo/404.php
+#ErrorDocument 401 http://localhost/desafio_leo/404.php
+#ErrorDocument 403 http://localhost/desafio_leo/404.php
+#ErrorDocument 404 http://localhost/desafio_leo/404.php
+#ErrorDocument 500 http://localhost/desafio_leo/404.php
