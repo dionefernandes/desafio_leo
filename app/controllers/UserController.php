@@ -14,5 +14,12 @@
                 ]
             );
         }
+
+        public function storage() {
+            $this->loadView('home', [
+                    'Lista' => 'Lista de usuários'
+                ]
+            );
+        }
     }
 ?>

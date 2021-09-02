@@ -1,8 +1,11 @@
 <?php
     namespace app\core;
 
+<<<<<<< HEAD
     use app\controllers\MessageController;
 
+=======
+>>>>>>> 22f2de1d15b457737a8fb8dc69e5e61aae68c2b2
     class Controller {
 
         // Carrega as views do projeto
@@ -10,6 +13,7 @@
             $router = '../app/views/' . $view . '.php';
             $loader = '';
             
+<<<<<<< HEAD
             if(file_exists($router)) {
                 $loader = require_once($router);
             } else {
@@ -18,6 +22,12 @@
             }
 
             //dd($params, false);
+=======
+            if(file_exists($router))
+                $loader = require_once($router);
+
+            dd($params, false);
+>>>>>>> 22f2de1d15b457737a8fb8dc69e5e61aae68c2b2
 
             return $loader;
         }

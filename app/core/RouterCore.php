@@ -1,8 +1,11 @@
 <?php
     namespace app\core;
 
+<<<<<<< HEAD
     use app\controllers\MessageController;
 
+=======
+>>>>>>> 22f2de1d15b457737a8fb8dc69e5e61aae68c2b2
     class RouterCore {
         private $uri;
         private $method;
@@ -51,6 +54,7 @@
                 //dd($get, false);
                 
                 $router = substr($get['router'], 1);
+<<<<<<< HEAD
                 
                 // Remove a barra do final, caso exista
                 if(substr($router, -1) == '/') 
@@ -64,6 +68,19 @@
                     $message = new MessageController();
                     $message->message('Erro de funcionalidade', 'A requisição feita não pode ser retornada porque esta funcionalidade e/ou os métodos solicitados não existem.', '');
                     break;
+=======
+
+                // Remove a barra do final, caso exista
+                if(substr($router, -1) == '/') 
+                    $router = substr($router, 0, -1);
+
+                if($router == $this->uri) {
+                    // Verifica se é uma função
+                    if( is_callable($get['call']) ) {
+                        $get['call']();
+                        break;
+                    }
+>>>>>>> 22f2de1d15b457737a8fb8dc69e5e61aae68c2b2
                 }
             }
         }
