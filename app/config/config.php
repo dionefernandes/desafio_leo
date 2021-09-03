@@ -20,7 +20,7 @@
 	define('DEFAULT_EMAIL', "contato@leolearning.com");
 	define('TECNICO_EMAIL', "suporte@leolearning.com");
     define('PROTOCOL', 'http://');
-	define('DEFAULT_URL', PROTOCOL . $_SERVER['SERVER_NAME'] . '/');
+	define('DEFAULT_URL', PROTOCOL . $_SERVER['SERVER_NAME'] . '/desafio_leo' . '/');
     define('ACTUAL_URL', PROTOCOL . $_SERVER['SERVER_NAME'] . $_SERVER ['REQUEST_URI']);
     define('PARAMETERS', $_SERVER ['REQUEST_URI']);
 	define('SHORT_URL', basename(ACTUAL_URL));

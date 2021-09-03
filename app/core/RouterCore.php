@@ -1,11 +1,8 @@
 <?php
     namespace app\core;
 
-<<<<<<< HEAD
     use app\controllers\MessageController;
 
-=======
->>>>>>> 22f2de1d15b457737a8fb8dc69e5e61aae68c2b2
     class RouterCore {
         private $uri;
         private $method;
@@ -29,7 +26,7 @@
             $this->uri = implode('/', $this->normalizeURI($exp_uri));
         }
 
-        private function get($router, $call) {
+        public function get($router, $call) {
             $this->getArr[] = [
                 'router' => $router,
                 'call' => $call
@@ -52,38 +49,56 @@
         private function executeGet() {
             foreach($this->getArr as $get) {
                 //dd($get, false);
-                
+
                 $router = substr($get['router'], 1);
-<<<<<<< HEAD
                 
                 // Remove a barra do final, caso exista
                 if(substr($router, -1) == '/') 
                     $router = substr($router, 0, -1);
                 
                 // Verifica a existência da rota e se é uma função
-                if( $router == $this->uri && is_callable($get['call']) ) {
-                    $get['call']();
-                    break;
-                } else {
-                    $message = new MessageController();
-                    $message->message('Erro de funcionalidade', 'A requisição feita não pode ser retornada porque esta funcionalidade e/ou os métodos solicitados não existem.', '');
-                    break;
-=======
-
-                // Remove a barra do final, caso exista
-                if(substr($router, -1) == '/') 
-                    $router = substr($router, 0, -1);
-
-                if($router == $this->uri) {
-                    // Verifica se é uma função
-                    if( is_callable($get['call']) ) {
+                if( $router == $this->uri) {
+                    if(is_callable( $get['call'] )) {
                         $get['call']();
                         break;
+                    } else {
+                        $this->executeController($get['call']);
                     }
->>>>>>> 22f2de1d15b457737a8fb8dc69e5e61aae68c2b2
                 }
             }
         }
+
+        private function executeController($get) {
+            $exp_get = explode('@', $get);
+            $class = $exp_get[0];
+            $method = $exp_get[1];
+
+            if($class == '' || $method == '') {
+                $message = new MessageController();
+                $message->message('Dados inválidos', 'A requisição não pode ser retornada porque esta funcionalidade e/ou os métodos solicitados não existem.', 404);
+                return;
+            }
+            
+            $class_contoller = 'app\\controllers\\' . $class;
+
+            if(!class_exists($class_contoller)) {
+                $message = new MessageController();
+                $message->message('Dados inválidos', 'Cotroller não encontrada.', 404);
+                return;
+            }
+
+            if(!method_exists($class_contoller, $method)) {
+                $message = new MessageController();
+                $message->message('Dados inválidos', 'Método não encontrado.', 404);
+                return;
+            }
+
+            call_user_func_array([
+                new $class_contoller,
+                $method
+            ], []);
+        }
+
 
         private function normalizeURI($arr) {
             // Remove os índices vazios

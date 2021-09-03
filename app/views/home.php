@@ -11,6 +11,8 @@
 
     Home do projeto
 
+    <p><?php echo $params['Lista']; ?></p>
+
     <?php require_once('partials/footer.php'); ?>
 </body>
 </html>
