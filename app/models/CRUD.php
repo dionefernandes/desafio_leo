@@ -19,7 +19,6 @@
 
             if($DB->connect()) {
 				$this->query = mysqli_query($DB->connect(), $sql);
-                //$retorno = mysqli_fetch_assoc($this->query);
                 $retornoArr = [];
 
                 while($retorno = mysqli_fetch_assoc($this->query)) {
@@ -29,6 +28,37 @@
 
                 $loadView = new Controller();
                 $loadView->loadView('users', $retornoArr);
+			}
+        }
+
+        public function show($table, $columns, $filters) {
+            $sql = 'SELECT ' . $columns . ' FROM ' . $table . ' ' . $filters . ';';
+            
+            $DB = new DB();
+            $DB->connect();
+
+            if($DB->connect()) {
+				$this->query = mysqli_query($DB->connect(), $sql);
+                $retorno = mysqli_fetch_assoc($this->query);
+                //dd($retorno);
+
+                $loadView = new Controller();
+                $loadView->loadView('show_user', $retorno);
+			}
+        }
+
+        public function exists($table, $columns, $filters = '') {
+            $sql = 'SELECT ' . $columns . ' FROM ' . $table . ' ' . $filters;
+            
+            $DB = new DB();
+            $DB->connect();
+
+            if($DB->connect()) {
+				$this->query = mysqli_query($DB->connect(), $sql);
+                $retorno = mysqli_fetch_array($this->query);
+                //dd($retorno[0]);
+
+                return $retorno[0];
 			}
         }
 

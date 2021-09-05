@@ -5,7 +5,6 @@
     use app\models\DB;
 
 class Controller extends DB {
-
         // Carrega as views do projeto
         public function loadView(string $view, $params = []) {
             $router = '../app/views/' . $view . '.php';

@@ -26,10 +26,14 @@
 	define('SHORT_URL', basename(ACTUAL_URL));
 	define('IP', $_SERVER['REMOTE_ADDR']);
 	define('BANCO_DADOS', 'gerencia_cursos');
-	define('DEFAULT_CSS', DEFAULT_URL . 'public/css/');
+	define('DEFAULT_CSS', DEFAULT_URL . 'public/css/styles.css');
 	define('DEFAULT_SCRIPTS', DEFAULT_URL . 'public/js/');
 	define('DEFAULT_IMG', DEFAULT_URL . 'public/images/');
-	define('FAVICON', DEFAULT_IMG . 'public/favicon.jpg');
+	define('FAVICON', 'http://leolearning.com.br/images/LOGO/favicon1.ico');
+	define('LOGO', DEFAULT_IMG . 'logo_leo.png');
+	define('LOGO_CLEAN', DEFAULT_IMG . 'logo_leo_clean.png');
+	define('USERS_IMG', DEFAULT_URL . 'public/img_users/');
+	define('CURSOS_IMG', DEFAULT_URL . 'public/img_cursos/');
 	define('META_KEYWORDS', 'E-learning, Plataforma LMS, Educação Corporativa, Soluções Digitais, Treinamentos Corporativos, Universidade Corporativa EAD, Treinamento de Colaboradores, Treinamento e Desenvolvimento');
 	define('META_DESCRIPTION', 'Com experiência em educação corporativa, LEO Learning Brasil desenvolve soluções digitais para empresas de todos os tamanhos e segmentos.');
 	
@@ -59,5 +63,7 @@
 		}
 	});
 
-	require_once("../app/functions/functions.php")
+	// Carrega funções de serviços
+	require_once("../app/Services/debug.php");
+	require_once("../app/Services/extract_id.php");
 ?>

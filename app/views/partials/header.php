@@ -6,23 +6,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="Shortcut Icon" type="image/x-icon" href="<?php echo FAVICON; ?>" />
+    <link rel="stylesheet" href="<?php echo DEFAULT_CSS; ?>" />
+
     <title><?php echo SITE_NAME; ?></title>
 </head>
 <body>
     <header>
         <div class="img-logo">
-            <img src="<?php echo LOGO; ?>" alt="<?php echo SITE_FULL_NAME; ?>" title="<?php echo SITE_FULL_NAME; ?>" />
+            <img src='<?php echo LOGO; ?>' alt="<?php echo SITE_FULL_NAME; ?>" title="<?php echo SITE_FULL_NAME; ?>" />
         </div>
         
         <div class="pesquisa">
             <form action="" method='POST' name="pesquisa-form">
                 <input type="text" name="busca" id="busca" class="busca" />
-                <input type="submit" value="Cadastrar" class="btn" />
+                <button type="submit" value="Cadastrar" class="btn-busca"><i class="fas fa-search"></i></button>
             </form>
         </div>
 
         <div class="perfil">
-            <img src="../public/users/img/1.jpg" alt="Nome do usuáro" title="Nome do usuáro" />
+            <img src="<?php echo USERS_IMG; ?>1.jpg" alt="Nome do usuáro" title="Nome do usuáro" class="img-perfil" />
             
             <div class="boas-vindas_user">
                 <div class="boas-vindas">
@@ -33,5 +38,8 @@
                     <?php echo 'Nome do usuário'; ?>
                 </div>
             </div>
+        </div>
+        <div class="icone-menu">
+            <i class="fas fa-sort-down"></i>
         </div>
     </header>

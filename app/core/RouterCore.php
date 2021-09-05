@@ -72,7 +72,12 @@
             $exp_get = explode('@', $get);
             $class = $exp_get[0];
             $method = $exp_get[1];
+            $arg = '';
 
+            if(isset($exp_get[2])) {
+                $arg = $exp_get[2];
+            }
+            
             if($class == '' || $method == '') {
                 $message = new MessageController();
                 $message->message('Dados inválidos', 'A requisição não pode ser retornada porque esta funcionalidade e/ou os métodos solicitados não existem.', 404);
@@ -92,11 +97,15 @@
                 $message->message('Dados inválidos', 'Método não encontrado.', 404);
                 return;
             }
-
+            
+            //dd($class_contoller . ' - ' . $method . ' - ' . $param);
+/*
             call_user_func_array([
                 new $class_contoller,
                 $method
             ], []);
+*/
+            call_user_func_array([new $class_contoller, $method], [$arg]);
         }
 
 
