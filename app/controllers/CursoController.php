@@ -4,14 +4,14 @@
     use app\core\Controller;
     use app\models\CRUD;
 
-class UserController extends Controller {
+class CursoController extends Controller {
         public function __construct() 
         {
-            //echo 'Usuário retornardo';
+            //echo 'Curso retornardo';
         }
 
         public function index() {
-            $table = 'users';
+            $table = 'cursos';
             $columns = '*';
             $filters = '';
 
@@ -19,38 +19,37 @@ class UserController extends Controller {
             $CRUD->index($table, $columns, $filters);
         }
 
-        public function showUser($id) {
-            $table = 'users';
+        public function showCurso($id) {
+            $table = 'cursos';
             $columns = '*';
             $filters = 'WHERE id = ' . $id . ' LIMIT 1';
-            $pag = 'show_user';
+            $pag = 'show_curso';
 
             $CRUD = new CRUD();
             $CRUD->show($table, $columns, $filters, $pag);
         }
 
         public function store($data = []) {
-            $table = 'users';
-            $senha = md5($data['senha']);
+            $table = 'cursos';
 
             $data = [
-                'nome' => $data['nome'],
-                'email' => $data['email'],
-                'senha' => $senha ,
+                'titulo' => $data['titulo'],
+                'descricao' => $data['descricao'],
+                'slideshow' => $data['slideshow'],
                 'img' => $data['img'],
-                'modal' => '',
+                'users_id' => $data['users_id'],
             ];
 
-            $filters = "WHERE email = '" . $data['email'] . "' LIMIT 1";
+            $filters = "WHERE titulo = '" . $data['titulo'] . "' LIMIT 1";
 
-            $retorno = $this->userExists($filters);
+            $retorno = $this->cursoExists($filters);
 
             if($retorno != '') {
 
                 $errorArr = [
                     'code' => '',
-                    'title' => 'Usuário já cadastrado',
-                    'message' => 'Este endereço de e-mail já está sendo utilizado por outro usuário.'
+                    'title' => 'Curso já cadastrado',
+                    'message' => 'Este nomme de curso já está em uso. Defina um nome diferente.'
                 ];
 
                 $loadView = new Controller();
@@ -63,43 +62,38 @@ class UserController extends Controller {
             $CRUD->create($table, $data);
         }
 
-        public function showEditUser($id) {
-            $table = 'users';
+        public function showEditCurso($id) {
+            $table = 'cursos';
             $columns = '*';
             $filters = 'WHERE id = ' . $id . ' LIMIT 1';
-            $pag = 'edit_user';
+            $pag = 'edit_curso';
 
             $CRUD = new CRUD();
             $CRUD->show($table, $columns, $filters, $pag);
         }
 
         public function update($data = []) {
-            $table = 'users';
-            $senha = '';
-
-            if($data['senha'] != '') {
-                $senha = md5($data['senha']);
-            }
+            $table = 'cursos';
             
             $data = [
                 'id' => $data['id'],
-                'nome' => $data['nome'],
-                'email' => $data['email'],
-                'senha' => $senha ,
+                'titulo' => $data['titulo'],
+                'descricao' => $data['descricao'],
+                'slideshow' => $data['slideshow'],
                 'img' => $data['img'],
-                'modal' => '',
+                'users_id' => $data['users_id'],
             ];
 
-            $filters = "WHERE email = '" . $data['email'] . "' AND id <> " . $data['id'] . " LIMIT 1";
+            $filters = "WHERE titulo = '" . $data['titulo'] . "' AND id <> " . $data['id'] . " LIMIT 1";
 
-            $retorno = $this->userExists($filters);
+            $retorno = $this->cursoExists($filters);
 
             if($retorno != '') {
 
                 $errorArr = [
                     'code' => '',
-                    'title' => 'Usuário já cadastrado',
-                    'message' => 'Este endereço de e-mail já está sendo utilizado por outro usuário.'
+                    'title' => 'Curso já cadastrado',
+                    'message' => 'Este nomme de curso já está em uso. Defina um nome diferente.'
                 ];
 
                 $loadView = new Controller();
@@ -112,26 +106,26 @@ class UserController extends Controller {
             $CRUD->update($table, $data);
         }
 
-        public function userExists($filters) {
-            $table = 'users';
+        public function cursoExists($filters) {
+            $table = 'cursos';
             $columns = 'id';
 
             $CRUD = new CRUD();
             return $CRUD->exists($table, $columns, $filters);
         }
 
-        public function deleteUser($id)  {
-            $table = 'users';
+        public function deleteCurso($id)  {
+            $table = 'cursos';
             $columns = '*';
             $filters = 'WHERE id = ' . $id . ' LIMIT 1';
-            $pag = 'delete_user';
+            $pag = 'delete_curso';
 
             $CRUD = new CRUD();
             $CRUD->show($table, $columns, $filters, $pag);
         }
 
         public function deleteConfirm($id) {
-            $table = 'users';
+            $table = 'cursos';
             $filters = 'WHERE id = ' . $id . ' LIMIT 1';
 
             $CRUD = new CRUD();
@@ -139,12 +133,26 @@ class UserController extends Controller {
         }
 
         public function lastID() {
-            $table = 'users';
+            $table = 'cursos';
             $columns = 'id';
             $filters = 'ORDER BY id DESC LIMIT 1';
 
             $CRUD = new CRUD();
             return $CRUD->lastID($table, $columns, $filters);
+        }
+
+/***************************************************************************
+Home
+***************************************************************************/
+
+        public function home() {
+            $table = 'cursos';
+            $columns = '*';
+            $filters = '';
+            $pag = 'home';
+
+            $CRUD = new CRUD();
+            $CRUD->index($table, $columns, $filters, $pag);
         }
     }
 ?>

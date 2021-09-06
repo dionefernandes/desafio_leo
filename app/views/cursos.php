@@ -4,10 +4,10 @@
 ?>
 
 <section>
-    <h1 class='title'>Lista de usuários</h1>
+    <h1 class='title'>Lista de cursos</h1>
     
     <div class="content-right">
-        <a href='create_user' alt="Cadastrar novo usuário" title="Cadastrar novo usuário">
+        <a href='create_curso' alt="Cadastrar novo curso" title="Cadastrar novo curso">
             <button type="submit" class="btn-forms"><i class="fas fa-plus"></i>&nbsp; Cadastrar</button>
         </a>
     </div>
@@ -16,8 +16,9 @@
         <thead>
             <tr>
                 <th class='col-img-lista'>Imagem</th>
-                <th>Nome</th>
-                <th>E-mail</th>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Slideshow</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -27,21 +28,22 @@
             for($x = 0; $x < count($params); $x++) {
                 echo '
                     <tr>
-                        <td class="col-img-lista"><img src="' . USERS_IMG . $params[$x]['img'] . '" alt="' . $params[$x]['nome'] . '" title="' . $params[$x]['nome'] . '" class="img-perfil-lista" /></td>
-                        <td>' . $params[$x]['nome'] . '</td>
-                        <td>' . $params[$x]['email'] . '</td>
+                        <td class="col-img-lista"><img src="' . CURSOS_IMG . $params[$x]['img'] . '" alt="' . $params[$x]['titulo'] . '" title="' . $params[$x]['titulo'] . '" class="img-perfil-lista" /></td>
+                        <td>' . $params[$x]['titulo'] . '</td>
+                        <td>' . $params[$x]['descricao'] . '</td>
+                        <td>' . $params[$x]['slideshow'] . '</td>
                 ';
         ?>
                 <td class="lista-acoes">
-                    <a href='show_user/<?php echo $params[$x]['id']; ?>' alt="Visualizar" title="Visualizar">
+                    <a href='show_curso/<?php echo $params[$x]['id']; ?>' alt="Visualizar" title="Visualizar">
                         <i class="fas fa-search" alt="Visualizar" title="Visualizar"></i>
                     </a>
 
-                    <a href='showEditUser/<?php echo $params[$x]['id']; ?>' alt="Editar" title="Editar">
+                    <a href='showEditCurso/<?php echo $params[$x]['id']; ?>' alt="Editar" title="Editar">
                         <i class="fas fa-edit" alt="Editar" title="Editar"></i> 
                     </a>
 
-                    <a href='delete_user/<?php echo $params[$x]['id']; ?>' alt="Excluir" title="Excluir">
+                    <a href='delete_curso/<?php echo $params[$x]['id']; ?>' alt="Excluir" title="Excluir">
                         <i class="fas fa-trash-alt" alt="Excluir" title="Excluir"></i>
                     </a>
                 </td>

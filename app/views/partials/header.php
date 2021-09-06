@@ -1,4 +1,12 @@
-<?php include_once('../app/config/config.php'); ?>
+<?php
+    include_once('../app/config/config.php');
+    
+    $load =  ''; 
+
+    if(SHORT_URL == 'home') {
+       $load =  'onLoad="slide1()"';
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -13,7 +21,7 @@
 
     <title><?php echo SITE_NAME; ?></title>
 </head>
-<body>
+<body <?php echo $load; ?>>
     <header>
         <div class="img-logo">
             <img src='<?php echo LOGO; ?>' alt="<?php echo SITE_FULL_NAME; ?>" title="<?php echo SITE_FULL_NAME; ?>" />

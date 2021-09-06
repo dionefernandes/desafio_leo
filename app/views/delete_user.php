@@ -4,13 +4,7 @@
 ?>
 
 <section>
-    <h1 class='title'>Visualizar usuário</h1>
-
-    <div class="content-right">
-        <a href='../index' alt="Lista de usuários" title="Lista de usuários">
-            <button type="button" class="btn-forms"><i class="fas fa-list"></i>&nbsp; Litar usuários</button>
-        </a>
-    </div>
+    <h1 class='title'>Excluir usuário</h1>
 
     <table class='lista'>
         <tr class='tr-branca'>
@@ -45,6 +39,18 @@
             </td>
         </tr>
     </table>
+    
+    <div class="content-right">
+        <a href='../index' alt="Lista de usuários" title="Lista de usuários">
+            <button type="button" class="btn-forms"><i class="fas fa-list"></i>&nbsp; Litar usuários</button>
+        </a>
+
+        <button type="button" class="btn-danger" onclick="confirm_deleteUser('<?php echo $params['id'] ; ?>');">
+            <i class="fas fa-trash-alt" alt="Excluir usuário" title="Excluir usuário"></i>&nbsp; Excluir usuário
+        </button>
+    </div>
+
+    <script type="text/javascript" src="http://localhost/desafio_leo/public/js/delete_user.js"></script>
 </section>
 
 <?php include_once('../app/views/partials/footer.php'); ?>

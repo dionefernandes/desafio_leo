@@ -2,6 +2,9 @@
     namespace app\core;
 
     use app\controllers\MessageController;
+    use app\models\CRUD;
+    use app\controllers\UserController;
+    use app\controllers\CursoController;
 
     class RouterCore {
         private $uri;
@@ -26,7 +29,7 @@
             $this->uri = implode('/', $this->normalizeURI($exp_uri));
         }
 
-        public function get($router, $call) {
+        public function get($router, $call = []) {
             $this->getArr[] = [
                 'router' => $router,
                 'call' => $call
@@ -40,10 +43,74 @@
                     break;
 
                 case 'POST';
-                    
+                    $this->executePost();
                 break;
             }
                 
+        }
+
+        private function executePost() {
+            $data = $_POST;
+            $table = $data['modulo'];
+            $new_file_name = '';
+
+            if( $_FILES['img']['name'] != '' && isset( $data['id'] )) {
+                $new_file_name = $this->loadImg($table, $data['id']);
+            } elseif( $_FILES['img']['name'] != '' ) {
+                $new_file_name = $this->loadImg($table);
+            }
+
+            $data['img'] = $new_file_name;
+            //dd($data);          
+            
+            if($table == 'users' && isset($_POST['id'])) {
+                $users = new UserController();
+                $users->update($data);
+            } elseif($table == 'users') {
+                $users = new UserController();
+                $users->store($data);
+            } elseif($table == 'cursos' && isset($_POST['id'])) {
+                $cursos = new CursoController();
+                $cursos->update($data);
+            } elseif($table == 'cursos') {
+                $cursos = new CursoController();
+                $cursos->store($data);
+            }
+        }
+
+        private function loadImg($table, $img_name = '') {
+            $columns = 'id';
+            $filters = 'ORDER BY id DESC LIMIT 1';
+
+            $CRUD = new CRUD();
+            $new_name_img_user = $CRUD->lastID($table, $columns, $filters) +1;
+
+            $name_img_user = basename( $_FILES['img']['name'] );
+
+            $exp_extension = explode('.', $name_img_user);
+            $extension = $exp_extension[count($exp_extension) -1];
+
+            if($img_name == '') {
+                $new_file_name = $new_name_img_user . '.' . $extension;
+            } else {
+                $new_file_name = $img_name . '.' . $extension;
+            }
+
+            $dir = '../public/img_' . $table . '/';
+            $uploadfile = $dir . basename($_FILES['img']['name']);
+
+            $new_name = $dir . $new_file_name;
+            $old_name = $dir . $name_img_user;
+            
+            $file = $_FILES['img']; 
+
+            if (move_uploaded_file($file["tmp_name"], "$dir/".$file["name"])) { 
+                if (file_exists($old_name)) {
+                    rename($old_name, $new_name);
+                }
+            }
+
+            return $new_file_name;
         }
 
         private function executeGet() {
@@ -98,16 +165,10 @@
                 return;
             }
             
-            //dd($class_contoller . ' - ' . $method . ' - ' . $param);
-/*
-            call_user_func_array([
-                new $class_contoller,
-                $method
-            ], []);
-*/
+            //dd($class_contoller . ' - ' . $method . ' - ' . $arg);
+
             call_user_func_array([new $class_contoller, $method], [$arg]);
         }
-
 
         private function normalizeURI($arr) {
             // Remove os índices vazios
